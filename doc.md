@@ -1,4 +1,6 @@
-## env
+## DEFAULT
+
+### env
 ```
 yarn add serverless serverless-dynamodb-local serverless-offline
 
@@ -11,7 +13,18 @@ vi ~/.aws/credentials
 sls dynamodb install
 ```
 
-## run
+### run
 ```
 sls offline start
+```
+
+
+<!-- o-o o-o o-o o-o o-o o-o o-o o-o o-o o-o o-o o-o o-o o-o o-o -->
+
+
+## LINEBOT
+
+### set env
+```
+npm install @line/bot-sdk dotenv axios
 ```
