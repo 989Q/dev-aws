@@ -7,6 +7,7 @@ const serverless = require("serverless-http");
 const app = express();
 // dynamoDB
 const USERS_TABLE = process.env.USERS_TABLE;
+const MESSAGE_TABLE = process.env.MESSAGE_TABLE;
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient();
 // linebot 
 const axios = require("axios").default;
@@ -235,6 +236,8 @@ const handleEvent = async (event) => {
 
 app.use(express.json());
 
+// USERS_TABLE - - - - - - - - - - - - - - - - - - - - - - start
+
 app.get("/users/:userId", async function (req, res) {
   const params = {
     TableName: USERS_TABLE,
@@ -261,32 +264,71 @@ app.get("/users/:userId", async function (req, res) {
 });
 
 app.post("/users", async function (req, res) {
-  const { userId, name, phone } = req.body;
-  if (typeof userId !== "string") {
-    res.status(400).json({ error: '"userId" must be a string' });
-  } else if (typeof name !== "string") {
-    res.status(400).json({ error: '"name" must be a string' });
-  } else if (typeof phone !== "string") {
-    res.status(400).json({ error: '"phone" must be a string' });
-  }
+    const { userId, name, phone } = req.body;
+    if (typeof userId !== "string") {
+      res.status(400).json({ error: '"userId" must be a string' });
+    } else if (typeof name !== "string") {
+      res.status(400).json({ error: '"name" must be a string' });
+    } else if (typeof phone !== "string") {
+      res.status(400).json({ error: '"phone" must be a string' });
+    }
+  
+    const params = {
+      TableName: USERS_TABLE,
+      Item: {
+        userId: userId,
+        name: name,
+        phone: phone
+      },
+    };
 
-  const params = {
-    TableName: USERS_TABLE,
-    Item: {
-      userId: userId,
-      name: name,
-      phone: phone
-    },
-  };
-
-  try {
-    await dynamoDbClient.put(params).promise();
-    res.json({ userId, name, phone });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Could not create user" });
-  }
+    console.log('🧑🏻 params ->', params)
+    console.log('🧑🏻 TABLE ->', USERS_TABLE )
+  
+    try {
+      await dynamoDbClient.put(params).promise();
+      res.json({ userId, name, phone });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Could not create user" });
+    }
 });
+
+// USERS_TABLE - - - - - - - - - - - - - - - - - - - - - - end
+
+
+
+// MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - start
+
+app.post("/messages", async function (req, res) {
+    const { messageId, name } = req.body;
+    if (typeof messageId !== "string") {
+      res.status(400).json({ error: '"messageId" must be a string' });
+    } else if (typeof name !== "string") {
+      res.status(400).json({ error: '"name" must be a string' });
+    } 
+  
+    const params = {
+      TableName: MESSAGE_TABLE,
+      Item: {
+        messageId: messageId,
+        name: name,
+      },
+    };
+
+    console.log('💬 params ->', params)
+    console.log('💬 TABLE ->', MESSAGE_TABLE )
+  
+    try {
+      await dynamoDbClient.put(params).promise();
+      res.json({ messageId, name });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Could not create message" });
+    }
+  });
+
+// MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - end
 
 app.use((req, res, next) => {
   return res.status(404).json({
@@ -294,8 +336,8 @@ app.use((req, res, next) => {
   });
 });
 
-app.listen(4000, () => {
-    console.log("listening on 4000");
+app.listen(3000, () => {
+    console.log("listening on 3000");
 });
 
 module.exports.handler = serverless(app);

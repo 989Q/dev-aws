@@ -4,7 +4,10 @@ service: dev-proj-1
 frameworkVersion: '3'
 
 custom:
-  tableName: 'new-users-table-${sls:stage}'
+  # tableName: 'new-users-table-${sls:stage}', 'new-users-table-dev', 'new-message-table-dev'
+  tableName: 
+    - 'new-users-table-dev' 
+    - 'new-message-table-dev'
   dynamodb:
     stages:
       - dev
@@ -31,10 +34,12 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
-          Resource:
-            - Fn::GetAtt: [ UsersTable, Arn ]
+          Resource: '*'
+          # Resource:
+          #   - Fn::GetAtt: [ UsersTable, Arn ]
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    USERS_TABLE: new-users-table-dev
+    MESSAGE_TABLE: new-message-table-dev
 
 functions:
   api:
@@ -44,9 +49,11 @@ functions:
 
 resources:
   Resources:
+    # 1. User Table 
     UsersTable:
       Type: AWS::DynamoDB::Table
       Properties:
+        TableName: new-users-table-dev
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
@@ -54,4 +61,15 @@ resources:
           - AttributeName: userId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tableName}
+    # 2. Message Table
+    MessageTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: new-message-table-dev
+        AttributeDefinitions:
+          - AttributeName: messageId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: messageId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
