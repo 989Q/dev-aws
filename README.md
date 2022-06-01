@@ -17,6 +17,9 @@
 ```
 ## Dev-2 ( starter + linebot )
 ```
+🟢 ngrok & serverless
+🟡 wating post message data from line to dynamoDB
+
 🌊🏄🏻‍♂️ Serverless -> offline , online
 + expreess serverless dynamodb
 + linebot
