@@ -18,7 +18,8 @@
 ## Dev-2 ( starter + linebot )
 ```
 🟢 ngrok & serverless
-🟡 wating post message data from line to dynamoDB
+🟢 can post message data from line to dynamoDB
+🟡 connect to chat-ui
 
 🌊🏄🏻‍♂️ Serverless -> offline , online
 + expreess serverless dynamodb
