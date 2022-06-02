@@ -31,7 +31,7 @@ const client = new line.Client(lineConfig);
 app.post("/webhook", line.middleware(lineConfig), async (req, res) => {
     try {
         const events = req.body.events;
-        console.log("event 😵‍💫 ", events);
+        console.log('🍭 event 😵‍💫 ', events);
         return events.length > 0
             ? await events.map((item) => handleEvent(item))
             : res.status(200).send("OK");
@@ -50,6 +50,26 @@ const handleEvent = async (event) => {
     }
 
     else if (event.type === 'message') {
+        // put to dynamodb - - - - - - - - - - - - - - - - - - - - - - start
+        const params = {
+        TableName: MESSAGE_TABLE,
+            Item: {
+                messageId: event.message.id, 
+                name: "-",
+                text: event.message.text,
+            //   userId: event.source.userId
+            },
+        };
+        try {
+            await dynamoDbClient.put(params).promise();
+            console.log('🍭 send message to db 🧑🏻 💬 ', params)
+        } catch(error) {
+            console.log(error);
+            res.status(500).json({ error: "Could not send message to db" });
+        }
+        // put to dynamodb - - - - - - - - - - - - - - - - - - - - - - end
+
+        // ขอรายละเอียด
         if (event.message.text === "ขอรายละเอียด") {
             messageAll = [
                 { 
@@ -227,6 +247,7 @@ const handleEvent = async (event) => {
                 console.log(error);
             }
         }
+      
     }
 };
 
@@ -301,7 +322,7 @@ app.post("/users", async function (req, res) {
 // MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - start
 
 app.post("/messages", async function (req, res) {
-    const { messageId, name } = req.body;
+    const { messageId, name, text } = req.body;
     if (typeof messageId !== "string") {
       res.status(400).json({ error: '"messageId" must be a string' });
     } else if (typeof name !== "string") {
@@ -312,7 +333,8 @@ app.post("/messages", async function (req, res) {
       TableName: MESSAGE_TABLE,
       Item: {
         messageId: messageId,
-        name: name,
+        name: "-",
+        text: text
       },
     };
 
@@ -321,7 +343,7 @@ app.post("/messages", async function (req, res) {
   
     try {
       await dynamoDbClient.put(params).promise();
-      res.json({ messageId, name });
+      res.json({ messageId, name, text });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Could not create message" });
