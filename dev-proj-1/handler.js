@@ -5,6 +5,12 @@ const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
 const app = express();
+// CRUD
+const {
+    get
+} = require("@aws-sdk/client-dynamodb")
+const { v4: uuidv4 } = require('uuid');
+
 // dynamoDB
 const USERS_TABLE = process.env.USERS_TABLE;
 const MESSAGE_TABLE = process.env.MESSAGE_TABLE;
@@ -51,13 +57,16 @@ const handleEvent = async (event) => {
 
     else if (event.type === 'message') {
         // put to dynamodb - - - - - - - - - - - - - - - - - - - - - - start
+        const id_gen = uuidv4()
+
         const params = {
         TableName: MESSAGE_TABLE,
             Item: {
+                PK: id_gen,
                 messageId: event.message.id, 
                 name: "-",
                 text: event.message.text,
-            //   userId: event.source.userId
+                userId: event.source.userId
             },
         };
         try {
@@ -349,6 +358,32 @@ app.post("/messages", async function (req, res) {
       res.status(500).json({ error: "Could not create message" });
     }
   });
+
+// doing !!
+app.get('/message/:messageId', async (req, res) => {
+    const params = {
+        TableName: MESSAGE_TABLE,
+        Key: {
+            userId: req.params.userId,
+        },
+    };
+
+    try {
+        const { Item } = await dynamoDbClient.get(params).promise();
+        if (Item) {
+            const { userId, name, phone } = Item;
+
+            res.json({ userId, name, phone });
+        } else {
+            res
+             .status(404)
+             .json({ error: 'Cannot get' })
+        }
+    } catch (error) {
+        
+    }
+})
+// doing !!
 
 // MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - end
 

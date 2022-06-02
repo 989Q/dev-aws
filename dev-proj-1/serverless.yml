@@ -67,9 +67,9 @@ resources:
       Properties:
         TableName: new-message-table-dev
         AttributeDefinitions:
-          - AttributeName: messageId
+          - AttributeName: userId
             AttributeType: S
         KeySchema:
-          - AttributeName: messageId
+          - AttributeName: userId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
