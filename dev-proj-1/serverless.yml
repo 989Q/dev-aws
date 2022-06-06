@@ -61,15 +61,27 @@ resources:
           - AttributeName: userId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
     # 2. Message Table
     MessageTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: new-message-table-dev
         AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
           - AttributeName: userId
             AttributeType: S
         KeySchema:
-          - AttributeName: userId
+          - AttributeName: PK
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
+        GlobalSecondaryIndexes:
+          - IndexName: newest-message-table-dev
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            

@@ -360,29 +360,69 @@ app.post("/messages", async function (req, res) {
   });
 
 // doing !!
-app.get('/message/:messageId', async (req, res) => {
+
+// 🟡 get only PK
+app.get("/message/users/:PK", async function (req, res) {
     const params = {
-        TableName: MESSAGE_TABLE,
-        Key: {
-            userId: req.params.userId,
-        },
+      TableName: MESSAGE_TABLE,
+      Key: {
+        PK: req.params.PK,
+      },
     };
-
+  
     try {
-        const { Item } = await dynamoDbClient.get(params).promise();
-        if (Item) {
-            const { userId, name, phone } = Item;
-
-            res.json({ userId, name, phone });
-        } else {
-            res
-             .status(404)
-             .json({ error: 'Cannot get' })
-        }
+      const { Item } = await dynamoDbClient.get(params).promise();
+      if (Item) {
+        const { PK, userId, text } = Item;
+        //
+        res.json({ PK, userId, text });
+      } else {
+        res
+          .status(404)
+          .json({ error: 'Could not find message' });
+      }
     } catch (error) {
-        
+      console.log(error);
+      res.status(500).json({ error: "Could not retreive message" });
     }
-})
+  });
+
+// 🔴 cannot get anything
+// app.get("/message/users/:userId", async function ( req, res ) {
+//     const params = {
+//         TableName: MESSAGE_TABLE,
+//         indexName: 'newest-message-table-dev',
+//         KeyConditionExpression: '${queryKey} = :hkey',
+//         ExpressionAttributeValues: {
+//             ':hkey': 'queryValue',
+//         },
+//     };
+
+//     const handler2 = async event => {
+//         if (!event.pathParameters.userId){
+//             return Response._400({ message: 'missing the userId from the path' });
+//         }
+
+//         const userId = event.pathParameters.userId;
+
+//         const userShow = await query({
+//             tableName: MESSAGE_TABLE,
+//             index: 'newest-message-table-dev',
+//             queryKey: 'userId',
+//             queryValue: userId
+//         })
+
+//         return Response._200(userShow)
+//     }
+
+//     try {
+//         const res = await dynamoDbClient.query(params).promise();
+//         return res.Items || [];
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+//   });
 // doing !!
 
 // MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - end
