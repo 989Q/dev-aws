@@ -17,6 +17,16 @@
 ```
 ## Dev-2 ( starter + linebot )
 ```
+: ---------- ---------- ---------- ---------- ---------- ---------- :
+🔴 GlobalSecondaryIndexes can't get anything 
+( proj not support GSI and file )
+
+🥲 ServerlessYoutubeSeries/lambdas/common/Dynamo.js 
+-> query: async ({ tableName, index, queryKey, queryValue }) => {...}
+🥲 ServerlessYoutubeSeries/lambdas/endpoints/getGameScores.js 
+-> const handler = async event => {...}
+: ---------- ---------- ---------- ---------- ---------- ---------- :
+
 🟢 ngrok & serverless
 🟢 can post message data from line to dynamoDB
 🟡 connect to chat-ui
