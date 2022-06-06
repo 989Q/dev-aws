@@ -20,6 +20,8 @@
 : ---------- ---------- ---------- ---------- ---------- ---------- :
 🔴 GlobalSecondaryIndexes can't get anything 
 ( proj not support GSI and file )
+-> [BACKEND]  -> aws dynamoDB is work
+-> [FRONTEND] -> postman error can't get data because I don't know the correct format to do GSI.
 
 🥲 ServerlessYoutubeSeries/lambdas/common/Dynamo.js 
 -> query: async ({ tableName, index, queryKey, queryValue }) => {...}
