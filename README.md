@@ -1,23 +1,24 @@
-# Detail
-<!-- ![aws-hero](https://user-images.githubusercontent.com/73060136/170978123-74321c58-f497-4c36-a2e9-cb719add57cc.jpeg) -->
-<table>
+<!-- <table>
   <tr>
     <td align="center">README</td>
   </tr>
   <tr>
     <td align="center"><img src="https://user-images.githubusercontent.com/73060136/170978123-74321c58-f497-4c36-a2e9-cb719add57cc.jpeg" width=100%></td>
   </tr>
-</table>
+</table> -->
 
 
-## Dev-1 ( starter )
+### Dev-1 ( starter )
 ```
 🌊🏄🏻‍♂️ Serverless -> offline , online
 + expreess serverless dynamodb
 ```
-## Dev-2 ( starter + linebot )
+
+</br>
+
+### Dev-2 ( starter + linebot )
 ```
-: ---------- ---------- ---------- ---------- ---------- ---------- :
+: -------------------- -------------------- -------------------- :
 🔴 GlobalSecondaryIndexes can't get anything 
 ( proj not support GSI and file )
 -> [BACKEND]  -> aws dynamoDB is work
@@ -27,7 +28,7 @@
 -> query: async ({ tableName, index, queryKey, queryValue }) => {...}
 🥲 ServerlessYoutubeSeries/lambdas/endpoints/getGameScores.js 
 -> const handler = async event => {...}
-: ---------- ---------- ---------- ---------- ---------- ---------- :
+: -------------------- -------------------- -------------------- :
 
 🟢 ngrok & serverless
 🟢 can post message data from line to dynamoDB
@@ -39,4 +40,12 @@
 
 🌊🏄🏻‍♂️ Feature
 + graphql
+```
+
+</br>
+
+### sls.ts-1 ( serverless.ts template )
+```
+Building a serverless app with TypeScript
+- https://github.com/icode247/aws-serverless-typescript-api/
 ```
