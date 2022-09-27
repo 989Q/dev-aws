@@ -1,4 +1,4 @@
-// SECTION 1 START
+//  ____________________ SECTION 1 START ____________________
 
 import type { AWS } from '@serverless/typescript';
 
@@ -6,15 +6,55 @@ import
   hello 
 from '@functions/hello';
 
-// SECTION 1 END
+  /* 
+    ...constants
+  */ 
 
-// SECTION 2 START
+//  ____________________ SECTION 1 ENDER ____________________
 
-// SECTION 2 END
 
-// SECTION 3 START
+
+//  ____________________ SECTION 2 START ____________________
+
+  /* 
+    ...apiGateway
+  */ 
+   
+//  ____________________ SECTION 2 ENDER ____________________
+
+
+
+//  ____________________ SECTION 3 START ____________________
 
 const serverlessConfiguration: AWS = {
+
+  /* 
+    __________ SETTING __________
+
+    frameworkVersion 
+      .2 -> 3
+
+    custom
+      .serverless-offline 
+
+    plugins
+      .serverless-offline
+
+    iam
+      .role
+
+    __________ HANDLER __________
+
+    functions
+      .gql
+
+    Resources
+      .GatewayResponseDefault4XX
+      .newBackendLicenseTableDynamoDbTable
+        .Type
+        .Properties
+  */ 
+
   service: 'aws-serverless-typescript-api',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild'],
@@ -47,6 +87,6 @@ const serverlessConfiguration: AWS = {
   },
 };
 
-// SECTION 3 END
+//  ____________________ SECTION 3 ENDER ____________________
 
 module.exports = serverlessConfiguration;
