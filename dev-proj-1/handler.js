@@ -1,4 +1,4 @@
-// - - - - - - - - - - - - - - - - - - - - - start
+//  ____________________ env 1 START ____________________
 
 // pack starter
 const AWS = require("aws-sdk");
@@ -9,7 +9,7 @@ const app = express();
 const {
     get
 } = require("@aws-sdk/client-dynamodb")
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid'); 
 
 // dynamoDB
 const USERS_TABLE = process.env.USERS_TABLE;
@@ -28,11 +28,9 @@ const lineConfig = {
 // create client
 const client = new line.Client(lineConfig);
 
-// - - - - - - - - - - - - - - - - - - - - - - end
+//  ____________________ env 1 ENDER ____________________
 
-// $$$ $$$ $$$ $$$ 
-// section LINEBOT
-// $$$ $$$ $$$ $$$
+//  ________________________________________ section START ________________________________________
 
 app.post("/webhook", line.middleware(lineConfig), async (req, res) => {
     try {
@@ -56,7 +54,7 @@ const handleEvent = async (event) => {
     }
 
     else if (event.type === 'message') {
-        // put to dynamodb - - - - - - - - - - - - - - - - - - - - - - start
+        //  ____________________ put to dynamod START ____________________
         const id_gen = uuidv4()
 
         const params = {
@@ -76,7 +74,7 @@ const handleEvent = async (event) => {
             console.log(error);
             res.status(500).json({ error: "Could not send message to db" });
         }
-        // put to dynamodb - - - - - - - - - - - - - - - - - - - - - - end
+        //  ____________________ put to dynamod ENDER ____________________
 
         // ขอรายละเอียด
         if (event.message.text === "ขอรายละเอียด") {
@@ -260,13 +258,11 @@ const handleEvent = async (event) => {
     }
 };
 
-// $$$ $$$ $$$ $$$
-// section ADMIN
-// $$$ $$$ $$$ $$$
+//  ________________________________________ section ADMIN ________________________________________
 
 app.use(express.json());
 
-// USERS_TABLE - - - - - - - - - - - - - - - - - - - - - - start
+//  ____________________ USERS_TABLE START ____________________
 
 app.get("/users/:userId", async function (req, res) {
   const params = {
@@ -324,11 +320,11 @@ app.post("/users", async function (req, res) {
     }
 });
 
-// USERS_TABLE - - - - - - - - - - - - - - - - - - - - - - end
+//  ____________________ USERS_TABLE ENDER ____________________
 
 
 
-// MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - start
+//  ____________________ MASSAGR_TABLE START ____________________
 
 app.post("/messages", async function (req, res) {
     const { messageId, name, text } = req.body;
@@ -425,7 +421,7 @@ app.get("/message/users/:PK", async function (req, res) {
 //   });
 // doing !!
 
-// MASSAGR_TABLE - - - - - - - - - - - - - - - - - - - - - - end
+//  ____________________ MASSAGR_TABLE ENDER ____________________
 
 app.use((req, res, next) => {
   return res.status(404).json({
