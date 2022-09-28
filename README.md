@@ -8,44 +8,54 @@
 </table> -->
 
 
+
+<!-- ________________________________________________________________________________________________________________________ -->
+
 ### Dev-1 ( starter )
-```
-🌊🏄🏻‍♂️ Serverless -> offline , online
-+ expreess serverless dynamodb
-```
+🤩 Success
+> - setting : serverless offine
+> - add : expreess serverless dynamodb
+
+
 
 </br>
+
+<!-- ________________________________________________________________________________________________________________________ -->
 
 ### Dev-2 ( starter + linebot )
-```
-: -------------------- -------------------- -------------------- :
-🔴 GlobalSecondaryIndexes can't get anything 
-( proj not support GSI and file )
--> [BACKEND]  -> aws dynamoDB is work
--> [FRONTEND] -> postman error can't get data because I don't know the correct format to do GSI.
+🤩 Success
+> - ngrok & serverless
+> - can post message data from line to dynamoDB
 
-🥲 ServerlessYoutubeSeries/lambdas/common/Dynamo.js 
--> query: async ({ tableName, index, queryKey, queryValue }) => {...}
-🥲 ServerlessYoutubeSeries/lambdas/endpoints/getGameScores.js 
--> const handler = async event => {...}
-: -------------------- -------------------- -------------------- :
+🤯 Doing
+> - connect to chat-ui
+> - Serverless : offline , online
+> - Feature : graphql
 
-🟢 ngrok & serverless
-🟢 can post message data from line to dynamoDB
-🟡 connect to chat-ui
+😭 Error
+> - GlobalSecondaryIndexes can't get anything, ( proj not support GSI and file )
+> - FRONTEND : postman error can't get data because I don't know the correct format to do GSI.
+>   - BACKEND : aws dynamoDB is work
 
-🌊🏄🏻‍♂️ Serverless -> offline , online
-+ expreess serverless dynamodb
-+ linebot
+???
+> 🥲 ServerlessYoutubeSeries/lambdas/common/Dynamo.js 
+>   - query: async ({ tableName, index, queryKey, queryValue }) => {...}
 
-🌊🏄🏻‍♂️ Feature
-+ graphql
-```
+> 🥲 ServerlessYoutubeSeries/lambdas/endpoints/getGameScores.js 
+>   - const handler = async event => {...}
+
+
 
 </br>
 
-### sls.ts-1 ( serverless.ts template )
-```
-Building a serverless app with TypeScript
-- https://github.com/icode247/aws-serverless-typescript-api/
-```
+<!-- ________________________________________________________________________________________________________________________ -->
+
+### sls.ts-1 ( serverless.ts template ) 
+🤩 Success
+> Building a serverless app with TypeScript
+>   - https://github.com/icode247/aws-serverless-typescript-api/
+
+🤯 Doing
+> - serverless.ts : advance
+> - api : graphql 
+> - ...
